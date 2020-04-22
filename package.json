@@ -1,0 +1,15 @@
+{
+  "name": "covid-data",
+  "version": "1.0.0",
+  "description": "Covid-19 data gathering script for NCDC pdf - Nigeria",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Balogun Wahab",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.24.0",
+    "pdf-parse": "^1.1.1"
+  }
+}

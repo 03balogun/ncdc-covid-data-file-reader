@@ -1,0 +1,28 @@
+{
+  "FILES_PATH": "./files",
+  "VALID_KEYS": [
+    "Lagos",
+    "FCT",
+    "Kano",
+    "Osun",
+    "Oyo",
+    "Edo",
+    "Ogun",
+    "Katsina",
+    "Kwara",
+    "Akwa-Ibom",
+    "Bauchi",
+    "Kaduna",
+    "Delta",
+    "Ekiti",
+    "Ondo",
+    "Rivers",
+    "Niger",
+    "Enugu",
+    "Jigawa",
+    "Benue",
+    "Anambra",
+    "Borno",
+    "TOTAL"
+  ]
+}
