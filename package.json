@@ -1,7 +1,7 @@
 {
-  "name": "covid-data",
+  "name": "ncdc-covid-data-file-reader",
   "version": "1.0.0",
-  "description": "Covid-19 data gathering script for NCDC pdf - Nigeria",
+  "description": "This script reads NCDC COVID-19 Situation report PDF files and formats it to JSON",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

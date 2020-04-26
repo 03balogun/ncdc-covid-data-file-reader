@@ -3,3 +3,5 @@ files/
 node_modules/
 yarn.lock
 yarn-error.log
+NCDC-*
+status.txt
