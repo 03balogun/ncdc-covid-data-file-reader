@@ -1,4 +1,3 @@
-require('dotenv').config();
 const mongoose = require('mongoose');
 
 /**
@@ -6,12 +5,11 @@ const mongoose = require('mongoose');
  * @param {String} url mongodb connection url
  * @return {*} log to show success or failure of connection
  */
-exports.connect = function (url) {
-    mongoose.connect(url, { useNewUrlParser: true })
-        .then(() => {
-            console.log('database successfully connected');
-        })
-        .catch((err) => {
-            console.error(`database connection failure: \n ${err.stack}`);
-        });
+exports.connect = async function (url) {
+    try {
+        await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log('database successfully connected');
+    }catch (error) {
+        console.error(`database connection failure: \n ${error.stack}`);
+    }
 };

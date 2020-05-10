@@ -9,7 +9,12 @@
   "author": "Balogun Wahab",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.2.0",
     "moment": "^2.24.0",
-    "pdf-parse": "^1.1.1"
+    "mongoose": "^5.9.10",
+    "pdf-parse": "^1.1.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5"
   }
 }

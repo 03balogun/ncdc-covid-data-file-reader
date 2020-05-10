@@ -24,7 +24,7 @@ async function fileProcessor(inputPath, outputPath, handler, writeToFle = true) 
          * So we're splitting by the underscore and the first item is the date
          */
         const {1: date} = filename.split('_');
-        const formatDate = moment(date,"DMYY").format("M/D/YYYY");
+        const formatDate = moment(date,"D-MMMM-YYYY").format("M/D/YYYY");
         console.log(formatDate);
         dataCollections[formatDate] = await handler(utils.getFile(`${inputPath}/${filename}`))
     }

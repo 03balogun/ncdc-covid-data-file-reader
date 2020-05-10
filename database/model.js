@@ -1,14 +1,8 @@
-/**
- * Created by PhpStorm.
- * User: Balogun Wahab
- */
-
 const mongoose = require('mongoose');
-
 
 const { Schema } = mongoose;
 
-const ncdcCovidDataSchema = new Schema({
+const RecordSchema = new Schema({
   state: {
     type: String,
     trim: true,
@@ -22,7 +16,6 @@ const ncdcCovidDataSchema = new Schema({
   total_discharged: {
     type: Number,
     required: true,
-    unique: true
   },
   total_deaths: {
     type: Number,
@@ -40,11 +33,4 @@ const ncdcCovidDataSchema = new Schema({
   }
 });
 
-ncdcCovidDataSchema.statics = {
-  valueExists (query) {
-    return this.findOne(query)
-      .then(result => result);
-  }
-};
-
-module.exports = mongoose.model('ncdcCovidRecord', ncdcCovidDataSchema);
+module.exports = mongoose.model('ncdcCovidRecord', RecordSchema);

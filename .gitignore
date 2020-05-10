@@ -5,3 +5,6 @@ yarn.lock
 yarn-error.log
 NCDC-*
 status.txt
+.env
+latest/
+data/
