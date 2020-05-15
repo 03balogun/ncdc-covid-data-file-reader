@@ -45,6 +45,7 @@ module.exports = async (dataBuffer, formatter) => {
             fct: 'abuja',
             ibom: 'akwa ibom',
             akwa: 'akwa ibom',
+            enug: 'enugu',
         };
 
         for (let i = 0; i < collections.length; i++) {
@@ -54,8 +55,10 @@ module.exports = async (dataBuffer, formatter) => {
             // Get the state name
             let state = key.replace(/[^\w\s]/gi, '').toLowerCase();
             let figures = individualItem.splice(1, individualItem.length);
-
             if (state === 'akwa' && figures[0] === 'Ibom') {
+                figures.shift();
+            }
+            if (state === 'enug' && figures[0] === 'u') {
                 figures.shift();
             }
 

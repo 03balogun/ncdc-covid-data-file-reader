@@ -39,7 +39,7 @@ const insertRecords = async () => {
                 }
             });
 
-            // Uncomment for ROLLBACK
+            //Uncomment for ROLLBACK
             // await model.deleteMany({
             //     report_date: formattedRecord[0].report_date
             // });

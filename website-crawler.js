@@ -66,9 +66,9 @@ async function visitNCDC() {
         // Visit website
         const domContent = await crawlWebsite(`${BASE_URL}/${FILES_URI}`);
 
-        for (let i = 0; i <= 4; i++) {
+        //for (let i = 0; i <= 4; i++) {
             // Get the report table, then get the first row
-            const firstRow = $(domContent).find('table.table-striped').find('tbody tr')[i];
+            const firstRow = $(domContent).find('table.table-striped').find('tbody tr')[0];
 
             // Get the last two columns
             const {2:dateColumn, 3: linkColumn} = $(firstRow).children();
@@ -95,10 +95,10 @@ async function visitNCDC() {
             // Run extraction
             console.log('Extracting Data');
             const folderPath = path.resolve(`latest/${date}/`);
-            await fileProcessor(folderPath, `${folderPath}/report_${parseDate}.json`, format6Reader)
+            await fileProcessor(folderPath, `${folderPath}/report_${parseDate}.json`, format6Reader);
             console.log(`Done Files at ${folderPath}`);
             // End
-        }
+        // }
 
     }catch (error) {
         console.log(error)
