@@ -6,6 +6,7 @@ const $ = require('cheerio');
 const moment = require('moment');
 const fileProcessor = require('./src/fileProcessor');
 const format6Reader = require('./src/handlers/format6Reader');
+const database = require('./database');
 
 
 
@@ -66,9 +67,9 @@ async function visitNCDC() {
         // Visit website
         const domContent = await crawlWebsite(`${BASE_URL}/${FILES_URI}`);
 
-        //for (let i = 0; i <= 4; i++) {
+        for (let i = 0; i <= 1; i++) {
             // Get the report table, then get the first row
-            const firstRow = $(domContent).find('table.table-striped').find('tbody tr')[0];
+            const firstRow = $(domContent).find('table.table-striped').find('tbody tr')[i];
 
             // Get the last two columns
             const {2:dateColumn, 3: linkColumn} = $(firstRow).children();
@@ -95,10 +96,11 @@ async function visitNCDC() {
             // Run extraction
             console.log('Extracting Data');
             const folderPath = path.resolve(`latest/${date}/`);
-            await fileProcessor(folderPath, `${folderPath}/report_${parseDate}.json`, format6Reader);
+            const outputFolder = path.resolve('data/new/');
+            await fileProcessor(folderPath, `${outputFolder}/report_${parseDate}.json`, format6Reader);
             console.log(`Done Files at ${folderPath}`);
             // End
-        // }
+        }
 
     }catch (error) {
         console.log(error)
@@ -107,5 +109,11 @@ async function visitNCDC() {
 }
 
 (async () => {
-    await visitNCDC()
+    await visitNCDC();
+
+    // Import to DB
+    await database();
+
+    // Sleep
+    process.exit();
 })();

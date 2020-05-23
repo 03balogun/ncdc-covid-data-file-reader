@@ -1,19 +1,20 @@
 require('dotenv').config();
+const path = require('path');
 const connection = require('./connection');
 const model = require('./model');
 
 const utils = require('../src/utils');
 
-const filesPath = '../data/new';
-
-const files = utils.getFileNames(filesPath);
-let record = {};
-for (let i = 0; i < files.length; i++) {
-    const file = require(`${filesPath}/${files[i]}`);
-    record = {...record, ...file}
-}
+const filesPath = path.resolve('data/new');
 
 const insertRecords = async () => {
+    const files = utils.getFileNames(filesPath);
+    let record = {};
+    for (let i = 0; i < files.length; i++) {
+        const file = require(`${filesPath}/${files[i]}`);
+        record = {...record, ...file}
+    }
+
     try {
         console.time('executionTime');
 
@@ -40,9 +41,9 @@ const insertRecords = async () => {
             });
 
             //Uncomment for ROLLBACK
-            // await model.deleteMany({
-            //     report_date: formattedRecord[0].report_date
-            // });
+            await model.deleteMany({
+                report_date: formattedRecord[0].report_date
+            });
             ///push data
             records.push(formattedRecord);
         }
@@ -56,10 +57,9 @@ const insertRecords = async () => {
     }
 };
 
-(async ()=>{
+module.exports = async () =>{
     // Connect to db
     await connection.connect(process.env.DATABASE_SERVER);
 
     await insertRecords();
-
-})();
+};
