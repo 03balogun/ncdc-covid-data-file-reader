@@ -6,16 +6,11 @@ const $ = require('cheerio');
 const moment = require('moment');
 const fileProcessor = require('./src/fileProcessor');
 const format6Reader = require('./src/handlers/format6Reader');
-const database = require('./database');
-
 
 
 /**
  * @description Visit NCDC, download latest report and save it to json
  */
-
-const BASE_URL = 'https://ncdc.gov.ng';
-const FILES_URI = 'diseases/sitreps/?cat=14&name=An%20update%20of%20COVID-19%20outbreak%20in%20Nigeria';
 
 const download = (uri, dest) => {
    return new Promise((resolve, reject) => {
@@ -61,7 +56,11 @@ async function crawlWebsite(uri) {
     }
 }
 
-async function visitNCDC() {
+
+const visitNCDC = async () => {
+    const BASE_URL = process.env.NCDC_BASE_URL;
+    const FILES_URI = process.env.NCDC_FILE_PATH;
+
     try {
         console.log('Visiting Website');
         // Visit website
@@ -87,11 +86,11 @@ async function visitNCDC() {
 
             const parseDate = moment(date, 'D MMMM YYYY').format('D-MMMM-YYYY');
 
-            const outputPath = `${baseDest}/report_${parseDate}`;
+            const pdfOutputPath = `${baseDest}/report_${parseDate}.pdf`;
 
             // Download the file
             console.log('Downloading File');
-            await download(downloadLink, `${outputPath}.pdf`);
+            await download(downloadLink, `${pdfOutputPath}`);
 
             // Run extraction
             console.log('Extracting Data');
@@ -106,14 +105,6 @@ async function visitNCDC() {
         console.log(error)
     }
 
-}
+};
 
-(async () => {
-    await visitNCDC();
-
-    // Import to DB
-    await database();
-
-    // Sleep
-    process.exit();
-})();
+module.exports = visitNCDC;

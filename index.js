@@ -1,18 +1,26 @@
-const fileProcessor = require('./src/fileProcessor');
-const config = require('./config');
-// const format1Reader = require('./src/handlers/format1Reader');
-// const format2Reader = require('./src/handlers/format2Reader');
-// const format3Reader = require('./src/handlers/format3Reader');
-// const format4Reader = require('./src/handlers/format4Reader');
-// const format5Reader = require('./src/handlers/format5Reader');
-const format6Reader = require('./src/handlers/format6Reader');
+const requestPromise = require('request-promise');
+const crawler = require('./website-crawler');
+const importToDataBase = require('./database');
 
 (async () => {
-    const path = config.FILES_PATH.format6;
+    try {
+        const API_URL = process.env.API_BASE_URL;
+        const CACHE_SECRET = process.env.CACHE_SECRET;
 
-    const result = await fileProcessor(
-        `${path}`,
-        'format6Reader.json',
-        format6Reader);
-    // console.log(result);
+        const uri = `${API_URL}/clear-cache/${CACHE_SECRET}`;
+
+        // visit ncdc website, get latest PDF and extract data to JSON
+        await crawler();
+
+        // Import the data to DB
+        await importToDataBase();
+
+        // reset api cache
+        await requestPromise({uri});
+
+        // exist process
+        process.exit();
+    }catch (error) {
+        console.log(error);
+    }
 })();
